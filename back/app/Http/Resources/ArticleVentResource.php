@@ -17,9 +17,9 @@ class ArticleVentResource extends JsonResource
         return [
             "id"=>$this->id,
             "libelle"=>$this->libelle,
-            "categorie"=>$this->categorie,
+            "categorie"=>$this->categorie->libelle,
             "promo"=>$this->promo,
-            "confections"=>$this->confection(),
+            "confections"=>$this->confection,
             "reference"=>$this->reference,
             "path"=>$this->path,
             "marge"=>$this->marge

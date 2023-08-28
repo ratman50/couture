@@ -55,7 +55,12 @@ class ArticleVenteController extends Controller
     public function show(string $libelle)
     {
         $res=ArticleVente::where("libelle","like","%".$libelle.'%')->first();
+        if($res)
         return new ArticleVentResource($res);
+        return response([
+            'data'=>null,
+            "message"=>"not found"
+        ]);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ArticleResource;
+use App\Http\Resources\ArticleVentResource;
 use App\Http\Resources\FournisseurResource;
 use App\Http\Resources\PaginationCatRessource;
 use App\Http\Resources\PaginationCollection;
@@ -101,5 +102,12 @@ class ArticleController extends Controller
             ]);
         }
         return response($credentials);
+    }
+    public function show(string $libelle){
+        $res=Article::where("libelle","like","%".$libelle.'%')->get();
+            return response([
+                "data"=>$res,
+                "message"=>""
+            ]);
     }
 }
