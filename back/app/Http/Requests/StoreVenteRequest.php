@@ -23,7 +23,7 @@ class StoreVenteRequest extends FormRequest
     {
         return [
             "libelle"=>'required|unique:article_ventes', 
-            "categorie"=>"required|numeric",
+            "categorie"=>"required",
             "confections"=>"required|array",
             "reference"=>"required|string",
             "promo"=>"sometimes|required",

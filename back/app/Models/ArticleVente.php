@@ -21,11 +21,5 @@ class ArticleVente extends Model
         return $this->belongsTo(CategorieVente::class,"categorie_vente_id");
     }
     protected $guarded=["id"];
-    protected static function booted(){
-        
-        static::created(function($request) {
-
-            
-        });
-    }
+    
 }

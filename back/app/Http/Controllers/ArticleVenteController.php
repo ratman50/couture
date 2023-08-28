@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVenteRequest;
 use App\Http\Resources\ArticleVentResource;
+use App\Http\Resources\VenteResource;
 use App\Models\Article;
 use App\Models\ArticleVente;
+use App\Models\CategorieVente;
 use App\Models\Vente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +21,13 @@ class ArticleVenteController extends Controller
      */
     public function index()
     {
-        //
+        return[
+            "data"=>[
+                "article"=>VenteResource::collection(ArticleVente::all())->paginate(2),
+                "categorie"=>CategorieVente::all()
+            ],
+
+        ];
     }
 
     /**
@@ -30,7 +38,7 @@ class ArticleVenteController extends Controller
         return DB::transaction(function() use ($request){
             $articleVente=new ArticleVente();
             $articleVente->libelle=$request['libelle'];
-            $articleVente->categorie_vente_id=$request["categorie"];
+            $articleVente->categorie_vente_id=$request["categorie"]["id"];
             $articleVente->reference=$request["reference"];
             $articleVente->path=$request["path"];
             if(isset($request["promo"]))
@@ -54,11 +62,10 @@ class ArticleVenteController extends Controller
      */
     public function show(string $libelle)
     {
-        $res=ArticleVente::where("libelle","like","%".$libelle.'%')->first();
-        if($res)
-        return new ArticleVentResource($res);
+        $res=ArticleVente::where("libelle","like",$libelle."%")->get();
+       
         return response([
-            'data'=>null,
+            'data'=>$res,
             "message"=>"not found"
         ]);
     }
